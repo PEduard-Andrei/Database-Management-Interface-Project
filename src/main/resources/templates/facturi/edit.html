@@ -1,0 +1,74 @@
+<!--
+**Html-ul care contine pagina de editare a facturilor
+*@author Paunita Eduard-Andrei 332AA
+*@version 6 Ianuarie 2025
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Factura</title>
+    <link rel ="stylesheet" type="text/css" href="/css/StyleEdit.css">
+</head>
+<body>
+<div class="container">
+    <h1>Edit Factura</h1>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <form th:action="@{/facturi/edit/{id}(id=${factura.idFactura})}" method="post" th:object="${factura}">
+        <div class="form-group">
+            <label for="idComanda">Comanda:</label>
+            <select id="idComanda" th:field="*{idComanda}" required onchange="updateSum(this.value)">
+                <option value="">Select comanda</option>
+                <option th:each="comanda : ${comenzi}"
+                        th:value="${comanda.idComanda}"
+                        th:text="${'Comanda #' + comanda.idComanda}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="metodaPlata">Metoda Plata:</label>
+            <select id="metodaPlata" th:field="*{metodaPlata}" required>
+                <option value="">Select metoda plata</option>
+                <option value="Card">Card</option>
+                <option value="Transfer bancar">Transfer bancar</option>
+                <option value="Numerar">Numerar</option>
+                <option value="Cec">Cec</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="data">Data:</label>
+            <input type="date" id="data" th:field="*{data}" required>
+        </div>
+        <div class="form-group">
+            <label for="suma">Suma:</label>
+            <input type="number" id="suma" th:field="*{suma}" step="0.01" readonly>
+        </div>
+        <button type="submit" class="btn btn-submit">Update</button>
+        <a href="/facturi/view" class="btn btn-back">Back</a>
+    </form>
+</div>
+
+<script>
+    function updateSum(comandaId) {
+        if (comandaId) {
+            fetch(`/facturi/calculate-total/${comandaId}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('suma').value = data;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error calculating total. Please try again.');
+                });
+        }
+    }
+
+    // Calculeaza suma la incarcarea paginii
+    document.addEventListener('DOMContentLoaded', function() {
+        const comandaSelect = document.getElementById('idComanda');
+        if (comandaSelect.value) {
+            updateSum(comandaSelect.value);
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!--
+**Html-ul care contine pagina de editare a curierilor
+*@author Paunita Eduard-Andrei 332AA
+*@version 23 Decembrie 2024
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Curier</title>
+    <link rel ="stylesheet" type="text/css" href="/css/StyleEdit.css">
+</head>
+<body>
+<div class="container">
+    <h1>Edit Curier</h1>
+    <form th:action="@{/curier/edit/{id}(id=${curier.idCurier})}" method="post" th:object="${curier}">
+        <div class="form-group">
+            <label for="numeCurier">Nume Curier:</label>
+            <input type="text" id="numeCurier" th:field="*{numeCurier}" required>
+        </div>
+        <div class="form-group">
+            <label for="prenumeCurier">Prenume Curier:</label>
+            <input type="text" id="prenumeCurier" th:field="*{prenumeCurier}" required>
+        </div>
+        <div class="form-group">
+            <label for="firma">Firma:</label>
+            <input type="text" id="firma" th:field="*{firma}" required>
+        </div>
+        <button type="submit" class="btn btn-submit">Update</button>
+        <a href="/curier/view" class="btn btn-back">Back</a>
+    </form>
+</div>
+</body>
+</html>

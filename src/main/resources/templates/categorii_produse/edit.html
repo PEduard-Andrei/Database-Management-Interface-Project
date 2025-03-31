@@ -1,0 +1,26 @@
+<!--
+**Html-ul care contine pagina de editare a categoriilor de produse
+*@author Paunita Eduard-Andrei 332AA
+*@version 6 Ianuarie 2025
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Categorie Produse</title>
+    <link rel ="stylesheet" type="text/css" href="/css/StyleEdit.css">
+</head>
+<body>
+<div class="container">
+    <h1>Edit Categorie</h1>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <form th:action="@{/categorii_produse/edit/{id}(id=${categorii_produse.id_categorie})}" method="post" th:object="${categorii_produse}">
+        <div class="form-group">
+            <label for="denumire">Denumire:</label>
+            <input type="text" id="denumire" th:field="*{denumire}" required>
+        </div>
+        <button type="submit" class="btn btn-submit">Update</button>
+        <a href="/categorii_produse/view" class="btn btn-back">Back</a>
+    </form>
+</div>
+</body>
+</html>

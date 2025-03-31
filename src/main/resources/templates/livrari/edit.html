@@ -1,0 +1,46 @@
+<!--
+**Html-ul care contine pagina de editare a livrarilor
+*@author Paunita Eduard-Andrei 332AA
+*@version 6 Ianuarie 2025
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Livrare</title>
+    <link rel ="stylesheet" type="text/css" href="/css/StyleEdit.css">
+</head>
+<body>
+<div class="container">
+    <h1>Edit Livrare</h1>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <form th:action="@{/livrari/edit/{id}(id=${livrare.idLivrare})}" method="post" th:object="${livrare}">
+        <div class="form-group">
+            <label for="idComanda">Comanda:</label>
+            <select id="idComanda" th:field="*{idComanda}" required>
+                <option value="">Select comanda</option>
+                <option th:each="comanda : ${comenzi}"
+                        th:value="${comanda.idComanda}"
+                        th:text="${'Comanda #' + comanda.idComanda}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="data">Data:</label>
+            <input type="date" id="data" th:field="*{data}" required>
+        </div>
+        <div class="form-group">
+            <label for="statusLivrare">Status Livrare:</label>
+            <select id="statusLivrare" th:field="*{statusLivrare}" required>
+                <option value="">Select status</option>
+                <option value="In asteptare">In asteptare</option>
+                <option value="In tranzit">In tranzit</option>
+                <option value="Livrata">Livrata</option>
+                <option value="Returnata">Returnata</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-submit">Update</button>
+        <a href="/livrari/view" class="btn btn-back">Back</a>
+    </form>
+</div>
+</body>
+</html>

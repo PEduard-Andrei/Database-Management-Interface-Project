@@ -1,0 +1,48 @@
+<!--
+**Html-ul care contine pagina de adaugare a produselor
+*@author Paunita Eduard-Andrei 332AA
+*@version 23 Decembrie 2024
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Produs</title>
+    <link rel ="stylesheet" type="text/css" href="/css/StyleAdd.css">
+</head>
+
+<body>
+<div class="container">
+    <h1>Add New Produs</h1>
+    <form action="/produse/add" method="post" th:object="${produs}">
+        <div class="form-group">
+            <label for="idCategorie">Categorie:</label>
+            <select id="idCategorie" th:field="*{idCategorie}" required>
+                <option value="">Select categorie</option>
+                <option th:each="categorie : ${categorii}"
+                        th:value="${categorie.id_categorie}"
+                        th:text="${categorie.denumire}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="numeProdus">Nume Produs:</label>
+            <input type="text" id="numeProdus" th:field="*{numeProdus}" required>
+        </div>
+        <div class="form-group">
+            <label for="descriere">Descriere:</label>
+            <textarea id="descriere" th:field="*{descriere}" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="pret">Pret:</label>
+            <input type="number" id="pret" th:field="*{pret}" step="0.01" required>
+        </div>
+        <div class="form-group">
+            <label for="stoc">Stoc:</label>
+            <input type="number" id="stoc" th:field="*{stoc}" required>
+        </div>
+        <button type="submit" class="btn btn-submit">Save</button>
+        <a href="/produse/view" class="btn btn-back">Back</a>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!--
+**Html-ul care contine pagina de editare a comenzilor
+*@author Paunita Eduard-Andrei 332AA
+*@version 30 Decembrie 2024
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Comanda</title>
+    <link rel ="stylesheet" type="text/css" href="/css/StyleEdit.css">
+</head>
+<body>
+<div class="container">
+    <h1>Edit Comanda</h1>
+    <form th:action="@{/comenzi/edit/{id}(id=${comanda.idComanda})}" method="post" th:object="${comanda}">
+        <div class="form-group">
+            <label>Furnizor:</label>
+            <select th:field="*{idFurnizor}" required>
+                <option value="">Select furnizor</option>
+                <option th:each="furnizor : ${furnizori}"
+                        th:value="${furnizor.idFurnizor}"
+                        th:text="${furnizor.numeFurnizor + ' - ' + furnizor.email}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Curier:</label>
+            <select th:field="*{idCurier}" required>
+                <option value="">Select curier</option>
+                <option th:each="curier : ${curieri}"
+                        th:value="${curier.idCurier}"
+                        th:text="${curier.numeCurier + ' ' + curier.prenumeCurier + ' (' + curier.firma + ')'}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Angajat:</label>
+            <select th:field="*{idAngajat}" required>
+                <option value="">Select angajat</option>
+                <option th:each="angajat : ${angajati}"
+                        th:value="${angajat.idAngajat}"
+                        th:text="${angajat.nume + ' ' + angajat.prenume + ' - ' + angajat.functie}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Data Plasarii:</label>
+            <input type="date" th:field="*{dataPlasarii}" required>
+        </div>
+        <div class="form-group">
+            <label>Status Livrare:</label>
+            <div th:if="${comanda.livrare != null}">
+                <select name="statusLivrare" required>
+                    <option value="">Select status</option>
+                    <option value="In asteptare" th:selected="${comanda.livrare.statusLivrare == 'In asteptare'}">In asteptare</option>
+                    <option value="In tranzit" th:selected="${comanda.livrare.statusLivrare == 'In tranzit'}">In tranzit</option>
+                    <option value="Livrata" th:selected="${comanda.livrare.statusLivrare == 'Livrata'}">Livrata</option>
+                    <option value="Returnata" th:selected="${comanda.livrare.statusLivrare == 'Returnata'}">Returnata</option>
+                </select>
+            </div>
+            <div th:if="${comanda.livrare == null}" class="status-info">
+                Neinregistrata
+            </div>
+        </div>
+        <button type="submit" class="btn btn-submit">Update</button>
+        <a href="/comenzi/view" class="btn btn-back">Back</a>
+    </form>
+</div>
+</body>
+</html>

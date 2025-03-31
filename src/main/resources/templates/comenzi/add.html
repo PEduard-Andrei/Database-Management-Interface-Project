@@ -1,0 +1,55 @@
+<!--
+**Html-ul care contine pagina de adaugare a comenzilor
+*@author Paunita Eduard-Andrei 332AA
+*@version 30 Decembrie 2024
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Comanda</title>
+    <link rel ="stylesheet" type="text/css" href="/css/StyleAdd.css">
+</head>
+<body>
+<div class="container">
+    <h1>Add New Comanda</h1>
+    <form action="/comenzi/add" method="post" th:object="${comanda}">
+        <div class="form-group">
+            <label for="idFurnizor">Furnizor:</label>
+            <select id="idFurnizor" th:field="*{idFurnizor}" required>
+                <option value="">Select furnizor</option>
+                <option th:each="furnizor : ${furnizori}"
+                        th:value="${furnizor.idFurnizor}"
+                        th:text="${furnizor.numeFurnizor + ' - ' + furnizor.email}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="idCurier">Curier:</label>
+            <select id="idCurier" th:field="*{idCurier}" required>
+                <option value="">Select curier</option>
+                <option th:each="curier : ${curieri}"
+                        th:value="${curier.idCurier}"
+                        th:text="${curier.numeCurier + ' ' + curier.prenumeCurier + ' (' + curier.firma + ')'}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="idAngajat">Angajat:</label>
+            <select id="idAngajat" th:field="*{idAngajat}" required>
+                <option value="">Select angajat</option>
+                <option th:each="angajat : ${angajati}"
+                        th:value="${angajat.idAngajat}"
+                        th:text="${angajat.nume + ' ' + angajat.prenume + ' - ' + angajat.functie}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="dataPlasarii">Data Plasarii:</label>
+            <input type="date" id="dataPlasarii" th:field="*{dataPlasarii}" required>
+        </div>
+        <button type="submit" class="btn btn-submit">Save</button>
+        <a href="/comenzi/view" class="btn btn-back">Back</a>
+    </form>
+</div>
+</body>
+</html>

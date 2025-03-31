@@ -1,0 +1,38 @@
+<!--
+**Html-ul care contine pagina de editare a furnizorilor
+*@author Paunita Eduard-Andrei 332AA
+*@version 6 Ianuarie 2025
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Furnizor</title>
+    <link rel ="stylesheet" type="text/css" href="/css/StyleEdit.css">
+</head>
+<body>
+<div class="container">
+    <h1>Edit Furnizor</h1>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+    <form th:action="@{/furnizori/edit/{id}(id=${furnizor.idFurnizor})}" method="post" th:object="${furnizor}">
+        <div class="form-group">
+            <label for="numeFurnizor">Nume Furnizor:</label>
+            <input type="text" id="numeFurnizor" th:field="*{numeFurnizor}" required>
+        </div>
+        <div class="form-group">
+            <label for="adresa">Adresa:</label>
+            <input type="text" id="adresa" th:field="*{adresa}" required>
+        </div>
+        <div class="form-group">
+            <label for="telefon">Telefon:</label>
+            <input type="tel" id="telefon" th:field="*{telefon}" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" th:field="*{email}" required>
+        </div>
+        <button type="submit" class="btn btn-submit">Update</button>
+        <a href="/furnizori/view" class="btn btn-back">Back</a>
+    </form>
+</div>
+</body>
+</html>

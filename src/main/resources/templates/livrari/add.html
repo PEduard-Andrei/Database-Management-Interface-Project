@@ -1,0 +1,50 @@
+<!--
+**Html-ul care contine pagina de adaugare a livrarilor
+*@author Paunita Eduard-Andrei 332AA
+*@version 6 Ianuarie 2025
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Livrare</title>
+    <link rel ="stylesheet" type="text/css" href="/css/StyleAdd.css">
+</head>
+<body>
+<div class="container">
+    <h1>Add New Livrare</h1>
+
+    <!-- Error message display -->
+    <div th:if="${error}" class="alert alert-danger" role="alert">
+        <p th:text="${error}"></p>
+    </div>
+
+    <form action="/livrari/add" method="post" th:object="${livrare}">
+        <div class="form-group">
+            <label for="idComanda">Comanda:</label>
+            <select id="idComanda" th:field="*{idComanda}" required>
+                <option value="">Select comanda</option>
+                <option th:each="comanda : ${comenzi}"
+                        th:value="${comanda.idComanda}"
+                        th:text="${'Comanda #' + comanda.idComanda}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="data">Data:</label>
+            <input type="date" id="data" th:field="*{data}" required>
+        </div>
+        <div class="form-group">
+            <label for="statusLivrare">Status Livrare:</label>
+            <select id="statusLivrare" th:field="*{statusLivrare}" required>
+                <option value="">Select status</option>
+                <option value="In asteptare">In asteptare</option>
+                <option value="In tranzit">In tranzit</option>
+                <option value="Returnata">Returnata</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-submit">Save</button>
+        <a href="/livrari/view" class="btn btn-back">Back</a>
+    </form>
+</div>
+</body>
+</html>

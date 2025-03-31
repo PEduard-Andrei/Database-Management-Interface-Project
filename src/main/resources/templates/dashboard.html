@@ -1,0 +1,156 @@
+<!--
+**Html-ul care contine pagina principala (dashboardul)
+*@author Paunita Eduard-Andrei 332AA
+*@version 6 Ianuarie 2025
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+    <link rel ="stylesheet" type="text/css" href="/css/StyleDashboard.css">
+</head>
+<body>
+<a href="/logout" class="logout-btn">Logout</a>
+
+<div class="dashboard-container">
+    <div class="welcome-section">
+        <h1>Sistem management furnizori si produse</h1>
+        <h2>Dashboard</h2>
+
+        <div class="filter-button" onclick="toggleFilters()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Filtre
+        </div>
+
+        <div id="filterMenu" class="filter-menu">
+            <div class="filter-section">
+                <h3>Interogari Simple</h3>
+                <a href="/dashboard?filter=orderDetails" class="filter-link">Detalii comenzi si produse</a>
+                <a href="/dashboard?filter=invoiceList" class="filter-link">Lista facturilor cu suma totala</a>
+                <a href="/dashboard?filter=productsCategories" class="filter-link">Produse si categorii</a>
+                <a href="/dashboard?filter=deliveriesList" class="filter-link">Lista livrarilor</a>
+                <a href="/dashboard?filter=ordersWithTotal" class="filter-link">Comenzi cu valoare totala</a>
+                <a href="/dashboard?filter=productsWithStock" class="filter-link">Produse cu stoc disponibil</a>
+            </div>
+            <div class="filter-section">
+                <h3>Interogari Complexe</h3>
+                <a href="/dashboard?filter=last30DaysOrders" class="filter-link">Comenzi ultimele 30 zile</a>
+                <a href="/dashboard?filter=lastMonthInvoices" class="filter-link">Facturi luna curenta</a>
+                <a href="/dashboard?filter=topBuyingProducts" class="filter-link">Top produse cumparate</a>
+                <a href="/dashboard?filter=supplierProducts" class="filter-link">Sumar furnizori si produse</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="table-operations">
+        <!-- Categorii Produse -->
+        <div class="table-card">
+            <h3>Categorii Produse</h3>
+            <div class="operation-buttons">
+                <a href="/categorii_produse/view" class="operation-btn view">View All</a>
+                <a href="/categorii_produse/add" class="operation-btn add">Add New</a>
+            </div>
+        </div>
+
+        <!-- Furnizori -->
+        <div class="table-card">
+            <h3>Furnizori</h3>
+            <div class="operation-buttons">
+                <a href="/furnizori/view" class="operation-btn view">View All</a>
+                <a href="/furnizori/add" class="operation-btn add">Add New</a>
+            </div>
+        </div>
+
+        <!-- Produse -->
+        <div class="table-card">
+            <h3>Produse</h3>
+            <div class="operation-buttons">
+                <a href="/produse/view" class="operation-btn view">View All</a>
+                <a href="/produse/add" class="operation-btn add">Add New</a>
+            </div>
+        </div>
+
+        <!-- Angajati -->
+        <div class="table-card">
+            <h3>Angajati</h3>
+            <div class="operation-buttons">
+                <a href="/angajati/view" class="operation-btn view">View All</a>
+                <a href="/angajati/add" class="operation-btn add">Add New</a>
+            </div>
+        </div>
+
+        <!-- Curier -->
+        <div class="table-card">
+            <h3>Curieri</h3>
+            <div class="operation-buttons">
+                <a href="/curier/view" class="operation-btn view">View All</a>
+                <a href="/curier/add" class="operation-btn add">Add New</a>
+            </div>
+        </div>
+
+        <!-- Comenzi -->
+        <div class="table-card">
+            <h3>Comenzi</h3>
+            <div class="operation-buttons">
+                <a href="/comenzi/view" class="operation-btn view">View All</a>
+                <a href="/comenzi/add" class="operation-btn add">Add New</a>
+            </div>
+        </div>
+
+        <!-- Detalii Comenzi -->
+        <div class="table-card">
+            <h3>Detalii Comenzi</h3>
+            <div class="operation-buttons">
+                <a href="/detalii_comenzi/view" class="operation-btn view">View All</a>
+                <a href="/detalii_comenzi/add" class="operation-btn add">Add New</a>
+            </div>
+        </div>
+
+        <!-- Livrari -->
+        <div class="table-card">
+            <h3>Livrari</h3>
+            <div class="operation-buttons">
+                <a href="/livrari/view" class="operation-btn view">View All</a>
+                <a href="/livrari/add" class="operation-btn add">Add New</a>
+            </div>
+        </div>
+
+        <!-- Facturi -->
+        <div class="table-card">
+            <h3>Facturi</h3>
+            <div class="operation-buttons">
+                <a href="/facturi/view" class="operation-btn view">View All</a>
+                <a href="/facturi/add" class="operation-btn add">Add New</a>
+            </div>
+        </div>
+
+        <!-- Evidenta Facturilor -->
+        <div class="table-card">
+            <h3>Evidenta Facturilor</h3>
+            <div class="operation-buttons">
+                <a href="/evidenta-facturilor/view" class="operation-btn view">View All</a>
+                <a href="/evidenta-facturilor/add" class="operation-btn add">Add New</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleFilters() {
+        const filterMenu = document.getElementById('filterMenu');
+        filterMenu.classList.toggle('active');
+    }
+
+    document.addEventListener('click', function(event) {
+        const filterMenu = document.getElementById('filterMenu');
+        const filterButton = document.querySelector('.filter-button');
+
+        if (!filterButton.contains(event.target) && !filterMenu.contains(event.target)) {
+            filterMenu.classList.remove('active');
+        }
+    });
+</script>
+</body>
+</html>

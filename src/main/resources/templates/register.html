@@ -1,0 +1,43 @@
+<!--
+**Html-ul care contine pagina de register
+*@author Paunita Eduard-Andrei 332AA
+*@version 26 Decembrie 2024
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Register Page</title>
+    <link rel ="stylesheet" type="text/css" href="/css/StyleRegister.css">
+</head>
+<body>
+<div class="register-container">
+    <h2>Register</h2>
+
+    <div th:if="${errors != null}">
+        <p th:if="${errors.contains('invalidkey')}" class="error-message">Cheia de admin nu se potriveste. Va rugam reincercati</p>
+        <p th:if="${errors.contains('passwordmismatch')}" class="error-message">Parolele sunt diferite. Va rugam reincercati</p>
+        <p th:if="${errors.contains('failed')}" class="error-message">Aceast Username este deja inregistrat. Va rugam introduceti alt Username</p>
+    </div>
+
+    <form method="post" action="/register">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter username" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required>
+
+        <label for="confirmPassword">Confirm Password</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm password" required>
+
+        <label for="adminKey">Admin Key</label>
+        <input type="password" id="adminKey" name="adminKey" placeholder="Enter admin key" required>
+
+        <input type="submit" value="Register">
+
+        <div class="button-container">
+            <a href="/login" class="back-to-login">Back to Login</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

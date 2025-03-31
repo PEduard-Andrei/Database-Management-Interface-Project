@@ -1,0 +1,33 @@
+<!--
+**Html-ul care contine pagina de adaugare a angajatilor
+*@author Paunita Eduard-Andrei 332AA
+*@version 23 Decembrie 2024
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Angajat</title>
+    <link rel ="stylesheet" type="text/css" href="/css/StyleAdd.css">
+</head>
+<body>
+<div class="container">
+    <h1>Add Angajat</h1>
+    <form action="/angajati/add" method="post" th:object="${angajat}">
+        <div class="form-group">
+            <label for="nume">Nume:</label>
+            <input type="text" id="nume" th:field="*{nume}" required>
+        </div>
+        <div class="form-group">
+            <label for="prenume">Prenume:</label>
+            <input type="text" id="prenume" th:field="*{prenume}" required>
+        </div>
+        <div class="form-group">
+            <label for="functie">Functie:</label>
+            <input type="text" id="functie" th:field="*{functie}" required>
+        </div>
+        <button type="submit" class="btn btn-submit">Save</button>
+        <a href="/angajati/view" class="btn btn-back">Back</a>
+    </form>
+</div>
+</body>
+</html>

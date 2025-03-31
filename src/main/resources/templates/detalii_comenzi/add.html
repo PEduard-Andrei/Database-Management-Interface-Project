@@ -1,0 +1,45 @@
+<!--
+**Html-ul care contine pagina de adaugare a detaliilor comenzilor
+*@author Paunita Eduard-Andrei 332AA
+*@version 30 Decembrie 2024
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Detalii Comenzi</title>
+    <link rel ="stylesheet" type="text/css" href="/css/StyleAdd.css">
+</head>
+<body>
+<div class="container">
+    <h1>Add Detalii Comanda</h1>
+    <form action="/detalii_comenzi/add" method="post">
+        <div class="form-group">
+            <label for="comanda">Comanda:</label>
+            <select id="comanda" name="comanda" required>
+                <option value="">Select comanda</option>
+                <option th:each="comanda : ${comenzi}"
+                        th:value="${comanda.idComanda}"
+                        th:text="${'Comanda #' + comanda.idComanda + ' - ' + comanda.idFurnizor.numeFurnizor}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="produs">Produs:</label>
+            <select id="produs" name="produs" required>
+                <option value="">Select produs</option>
+                <option th:each="produs : ${produse}"
+                        th:value="${produs.idProdus}"
+                        th:text="${produs.numeProdus + ' - ' + produs.pret + ' RON (Stoc: ' + produs.stoc + ')'}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cantitate">Cantitate:</label>
+            <input type="number" id="cantitate" name="cantitate" min="1" required>
+        </div>
+        <button type="submit" class="btn btn-submit">Save</button>
+        <a href="/detalii_comenzi/view" class="btn btn-back">Back</a>
+    </form>
+</div>
+</body>
+</html>

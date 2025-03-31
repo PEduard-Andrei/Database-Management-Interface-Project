@@ -1,0 +1,166 @@
+<!--
+**Html-ul care contine paginile filtrelor (query-urilor)
+*@author Paunita Eduard-Andrei 332AA
+*@version 6 Ianuarie 2025
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Dashboard - Filtered Results</title>
+  <link rel ="stylesheet" type="text/css" href="/css/StyleDashboardF.css">
+</head>
+<body>
+<div class="dashboard-container">
+  <div class="header-section">
+    <h1 class="results-title" th:text="${filterTitle}">Filter Results</h1>
+    <a href="/dashboard" class="back-button">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path d="M19 12H5M12 19l-7-7 7-7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Inapoi la Dashboard
+    </a>
+  </div>
+
+  <div class="filter-form-section">
+    <form th:action="@{/dashboard}" method="get" class="filter-form">
+      <input type="hidden" name="filter" th:value="${currentFilter}">
+
+      <!-- Command ID Filter -->
+      <div th:if="${showCommandIdFilter}" class="form-group">
+        <label for="commandId">Filtrează după numarul comenzii:</label>
+        <input type="number"
+               id="commandId"
+               name="commandId"
+               th:value="${commandId}"
+               placeholder="Introdu numarul comenzii"
+               class="form-control">
+      </div>
+
+      <!-- Furnizor Filter -->
+      <div th:if="${showFurnizorFilter}" class="form-group">
+        <label for="furnizorId">Filtreaza dupa Furnizor:</label>
+        <select id="furnizorId" name="furnizorId" class="form-control">
+          <option value="">Toti furnizorii</option>
+          <option th:each="furnizor : ${furnizori}"
+                  th:value="${furnizor.idFurnizor}"
+                  th:text="${furnizor.numeFurnizor}"
+                  th:selected="${furnizor.idFurnizor == furnizorId}">
+          </option>
+        </select>
+      </div>
+
+      <!-- Category Filter -->
+      <div th:if="${showCategoryFilter}" class="form-group">
+        <label for="categoryId">Filtrează după Categorie:</label>
+        <select id="categoryId" name="categoryId" class="form-control">
+          <option value="">Toate categoriile</option>
+          <option th:each="category : ${categories}"
+                  th:value="${category.id_categorie}"
+                  th:text="${category.denumire}"
+                  th:selected="${category.id_categorie == categoryId}">
+          </option>
+        </select>
+      </div>
+
+      <!-- Status Filter -->
+      <div th:if="${showStatusFilter}" class="form-group">
+        <label for="status">Filtrează după Status:</label>
+        <select id="status" name="status" class="form-control">
+          <option value="">Toate statusurile</option>
+          <option th:each="option : ${statusOptions}"
+                  th:value="${option}"
+                  th:text="${option}"
+                  th:selected="${option == status}">
+          </option>
+        </select>
+      </div>
+
+      <!-- Angajat Filter -->
+      <div th:if="${showAngajatFilter}" class="form-group">
+        <label for="angajatId">Filtrează după Angajat:</label>
+        <select id="angajatId" name="angajatId" class="form-control">
+          <option value="">Toți angajații</option>
+          <option th:each="angajat : ${angajati}"
+                  th:value="${angajat.idAngajat}"
+                  th:text="${angajat.nume + ' ' + angajat.prenume}"
+                  th:selected="${angajat.idAngajat == angajatId}">
+          </option>
+        </select>
+      </div>
+
+      <!-- Min Stock Filter -->
+      <div th:if="${showMinStockFilter}" class="form-group">
+        <label for="minStock">Filtrează după Stoc Minim:</label>
+        <input type="number"
+               id="minStock"
+               name="minStock"
+               th:value="${minStock}"
+               placeholder="Stoc minim"
+               class="form-control">
+      </div>
+
+      <!-- Metoda Plata Filter -->
+      <div th:if="${showMetodaPlataFilter}" class="form-group">
+        <label for="metodaPlata">Filtrează după Metoda de Plată:</label>
+        <select id="metodaPlata" name="metodaPlata" class="form-control">
+          <option value="">Toate metodele</option>
+          <option th:each="metoda : ${metodePlata}"
+                  th:value="${metoda}"
+                  th:text="${metoda}"
+                  th:selected="${metoda == metodaPlata}">
+          </option>
+        </select>
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit" class="filter-submit">Filtreaza</button>
+        <a th:href="@{/dashboard(filter=${currentFilter})}"
+           class="clear-filter">Sterge filtrul</a>
+      </div>
+    </form>
+  </div>
+
+  <div class="results-section">
+    <div th:if="${not #lists.isEmpty(results)}" class="table-container">
+      <table class="results-table">
+        <thead>
+        <tr>
+          <th th:each="header : ${headers}" th:text="${header}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="result : ${results}">
+          <td th:each="value : ${result}" th:text="${value}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div th:if="${#lists.isEmpty(results)}" class="no-results">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-bottom: 16px;">
+        <path d="M10 21h4m-2-2V3M8 8l8 8m0-8l-8 8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p>Nu s-au găsit rezultate pentru acest filtru.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Auto-submit cand sunt selectate optiunile
+  document.querySelectorAll('select.form-control').forEach(select => {
+    select.addEventListener('change', () => {
+      select.closest('form').submit();
+    });
+  });
+
+  // Validare input pentru numere
+  document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('input', () => {
+      if (input.value < 0) {
+        input.value = 0;
+      }
+    });
+  });
+</script>
+</body>
+</html>

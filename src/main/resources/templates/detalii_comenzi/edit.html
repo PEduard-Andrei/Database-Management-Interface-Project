@@ -1,0 +1,54 @@
+<!--
+**Html-ul care contine pagina de editare a detaliilor comenzilor
+*@author Paunita Eduard-Andrei 332AA
+*@version 6 Ianuarie 2025
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Detalii Comenzi</title>
+    <link rel ="stylesheet" type="text/css" href="/css/StyleEdit.css">
+</head>
+<body>
+<div class="container">
+    <h1>Edit Detalii Comanda</h1>
+    <div th:if="${error}" class="error-message" th:text="${error}"></div>
+    <form th:action="@{/detalii_comenzi/edit/{idComanda}/{idProdus}(idComanda=${detaliiComanda.id.idComanda},idProdus=${detaliiComanda.id.idProdus})}"
+          method="post">
+        <div class="form-group">
+            <label for="comanda">Comanda:</label>
+            <select id="comanda" name="comanda">
+                <option value="">Selecteaza Comanda</option>
+                <option th:each="comanda : ${comenzi}"
+                        th:value="${comanda.idComanda}"
+                        th:text="${'Comanda #' + comanda.idComanda}"
+                        th:selected="${comanda.idComanda == detaliiComanda.comanda.idComanda}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="produs">Produs:</label>
+            <select id="produs" name="produs">
+                <option value="">Selecteaza Produs</option>
+                <option th:each="produs : ${produse}"
+                        th:value="${produs.idProdus}"
+                        th:text="${produs.numeProdus + ' - ' + produs.pret + ' RON'}"
+                        th:selected="${produs.idProdus == detaliiComanda.produs.idProdus}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cantitate">Cantitate:</label>
+            <input type="number"
+                   id="cantitate"
+                   name="cantitate"
+                   th:value="${detaliiComanda.cantitate}"
+                   min="1"
+                   required>
+        </div>
+        <button type="submit" class="btn btn-submit">Update</button>
+        <a th:href="@{/detalii_comenzi/view}" class="btn btn-back">Back</a>
+    </form>
+</div>
+</body>
+</html>
