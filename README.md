@@ -1,11 +1,11 @@
 # Database-Management-Interface-Project
 
 
-A full-featured Supplier Management System with user authentication, CRUD operations for suppliers, orders, invoices, and deliveries, and real-time validation. 
+- A full-featured Supplier Management System with user authentication, CRUD operations for suppliers, orders, invoices, and deliveries, and real-time validation. 
 
-Includes an advanced filtering system, automated stock updates, invoice calculations, and a user-friendly dashboard. 
+- Includes an advanced filtering system, automated stock updates, invoice calculations, and a user-friendly dashboard. 
 
-Built using the MVC pattern with controllers, services, and repositories for database operations.
+- Built using the MVC pattern with controllers, services, and repositories for database operations.
 
 ---
 
